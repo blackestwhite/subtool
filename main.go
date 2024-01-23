@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -17,8 +18,21 @@ type Subtitle struct {
 }
 
 func main() {
+	// Define flags for input and output filenames
+	inputFile := flag.String("i", "", "Input filename (e.g., vid.srt)")
+	outputFile := flag.String("o", "", "Output filename (e.g., output.json)")
+
+	// Parse the command-line arguments
+	flag.Parse()
+
+	// Check if required flags are provided
+	if *inputFile == "" || *outputFile == "" || !strings.HasSuffix(*outputFile, ".json") || !strings.HasSuffix(*inputFile, ".srt") {
+		fmt.Println("Usage: subtool -i <input filename> -o <output filename>")
+		return
+	}
+
 	// Read the SRT file content
-	srtContent, err := os.ReadFile("vid.srt")
+	srtContent, err := os.ReadFile(*inputFile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,7 +75,7 @@ func main() {
 	}
 
 	// Write JSON to a new file
-	err = os.WriteFile("output.json", jsonData, 0644)
+	err = os.WriteFile(*outputFile, jsonData, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
