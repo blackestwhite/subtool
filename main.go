@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -18,7 +18,7 @@ type Subtitle struct {
 
 func main() {
 	// Read the SRT file content
-	srtContent, err := ioutil.ReadFile("vid.srt")
+	srtContent, err := os.ReadFile("vid.srt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,7 +61,7 @@ func main() {
 	}
 
 	// Write JSON to a new file
-	err = ioutil.WriteFile("output.json", jsonData, 0644)
+	err = os.WriteFile("output.json", jsonData, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
