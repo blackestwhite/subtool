@@ -11,10 +11,10 @@ import (
 )
 
 type Subtitle struct {
-	Index int
-	Start string
-	End   string
-	Text  string
+	Index int    `json:"index"`
+	Start string `json:"start"`
+	End   string `json:"end"`
+	Text  string `json:"text"`
 }
 
 func main() {
